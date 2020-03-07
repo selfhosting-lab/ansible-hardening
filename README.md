@@ -1,6 +1,4 @@
-# roles/hardening
-
-## Description
+# ansible-hardening
 
 [![Drone build status](https://img.shields.io/drone/build/selfhosting-lab/ansible-host/master?label=BUILD&logo=drone&style=for-the-badge)](https://cloud.drone.io/selfhosting-lab/ansible-host/)
 
