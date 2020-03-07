@@ -1,0 +1,18 @@
+---
+
+- name: 'umasks : Ensure insecure umasks are not used in profiles'
+  replace:
+    path: "{{ item }}"
+    regexp: "^ *umask +(?!{{ default_umask | string }}).*$"
+    replace: "  umask {{ default_umask | string }}"
+  with_items:
+  - /etc/profile
+  - /etc/bashrc
+  - /etc/csh.cshrc
+  - /etc/init.d/functions
+
+- name: 'umasks : Ensure default umask for logins is set appropriately'
+  lineinfile:
+    path: "{{ login_conf }}"
+    regexp: '^UMASK'
+    line: "UMASK {{ default_umask | string }}"

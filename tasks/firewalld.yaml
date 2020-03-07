@@ -1,0 +1,51 @@
+---
+
+- name: 'firewalld : Ensure FirewallD is installed'
+  dnf:
+    name:
+    - firewalld
+    - python3-firewall
+    state: present
+
+- name: 'firewalld : Ensure FirewallD is running'
+  systemd:
+    name: firewalld
+    enabled: true
+    daemon_reload: true
+    state: started
+
+- name: 'firewalld : Ensure services directory exists'
+  file:
+    path: "{{ firewalld_services_dir }}"
+    state: directory
+    mode: 0750
+    owner: root
+    group: root
+    seuser: system_u
+    serole: object_r
+    setype: firewalld_etc_rw_t
+
+- name: 'firewalld : Map RFC1918 addresses to the internal zone'
+  firewalld:
+    zone: internal
+    source: "{{ item }}"
+    state: enabled
+    immediate: true
+    permanent: true
+  with_items: "{{ rfc1918_addresses }}"
+
+- name: 'firewalld : Ensure SSH is available for the public zone'
+  firewalld:
+    zone: public
+    service: ssh
+    state: enabled
+    immediate: true
+    permanent: true
+
+- name: 'firewalld : Ensure mDNS is not available for the public zone'
+  firewalld:
+    zone: public
+    service: mdns
+    state: disabled
+    immediate: true
+    permanent: true

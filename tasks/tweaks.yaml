@@ -1,0 +1,20 @@
+---
+
+- name: 'tweaks : Ensure SHA512 is used to hash passwords'
+  lineinfile:
+    path: "{{ login_conf }}"
+    regexp: '^ENCRYPT_METHOD'
+    line: 'ENCRYPT_METHOD SHA512'
+
+- name: 'tweaks : Ensure timeout is set for logins'
+  lineinfile:
+    path: "{{ login_conf }}"
+    regexp: '^LOGIN_TIMEOUT'
+    line: 'LOGIN_TIMEOUT 60'
+
+- name: 'tweaks: Disable setuid on ssh-keysign'
+  file:
+    path: /usr/libexec/openssh/ssh-keysign
+    owner: root
+    group: ssh_keys
+    mode: 00555

@@ -1,0 +1,197 @@
+---
+
+################################################################################
+############################### KERNEL SETTINGS ################################
+################################################################################
+
+- name: 'kernel : Prevent unprivileged users from seeing dmesg output'
+  sysctl:
+    name: kernel.dmesg_restrict
+    value: '1'
+
+- name: 'kernel : Prevent users from reading kernel pointers'
+  sysctl:
+    name: kernel.kptr_restrict
+    value: '2'
+
+- name: 'kernel : Disable kernel magic key'
+  sysctl:
+    name: kernel.sysrq
+    value: '0'
+
+- name: 'kernel : Prevent unprivileged users from using ptrace'
+  sysctl:
+    name: kernel.yama.ptrace_scope
+    value: '2'
+
+- name: 'kernel : Append PID to core name in kernel dumps'
+  sysctl:
+    name: kernel.core_uses_pid
+    value: '1'
+
+- name: 'kernel : Randomise process address space'
+  sysctl:
+    name: kernel.randomize_va_space
+    value: '2'
+
+# ################################################################################
+# ################################# FS SETTINGS ##################################
+# ################################################################################
+
+- name: 'kernel : Protect cross-volume links'
+  sysctl:
+    name: "{{ item }}"
+    value: '1'
+  with_items:
+  - fs.protected_hardlinks
+  - fs.protected_symlinks
+
+- name: 'kernel : Prevent coredumps from setuid'
+  sysctl:
+    name: fs.suid_dumpable
+    value: '0'
+
+################################################################################
+################################# NET SETTINGS #################################
+################################################################################
+
+- name: 'kernel : Disable TCP timestamps'
+  sysctl:
+    name: net.ipv4.tcp_timestamps
+    value: '0'
+
+- name: 'kernel : Rate limit ICMP packets'
+  sysctl:
+    name: net.ipv4.icmp_ratelimit
+    value: '100'
+
+- name: 'kernel : Set mask for ICMP packets which will be rate limited'
+  sysctl:
+    name: net.ipv4.icmp_ratemask
+    value: '88089'
+
+- name: 'kernel : Ignore suspicous ICMP packets'
+  sysctl:
+    name: "{{ item }}"
+    value: '1'
+  with_items:
+  - net.ipv4.icmp_ignore_bogus_error_responses
+  - net.ipv4.icmp_echo_ignore_broadcasts
+
+- name: 'kernel : Protect from TCP attacks'
+  sysctl:
+    name: "{{ item }}"
+    value: '1'
+  with_items:
+  - net.ipv4.tcp_syncookies
+  - net.ipv4.tcp_rfc1337
+
+- name: 'kernel : Disable IPv6'
+  sysctl:
+    name: "{{ item }}"
+    value: '1'
+  with_items:
+  - net.ipv6.conf.all.disable_ipv6
+  - net.ipv6.conf.default.disable_ipv6
+
+- name: 'kernel : Enable source address verification'
+  sysctl:
+    name: "{{ item }}"
+    value: '1'
+  with_items:
+  - net.ipv4.conf.all.rp_filter
+  - net.ipv4.conf.all.log_martians
+  - net.ipv4.conf.default.rp_filter
+  - net.ipv4.conf.default.log_martians
+
+- name: 'kernel : Ignore ARP messages from IP and interface mismatch'
+  sysctl:
+    name: "{{ item }}"
+    value: '1'
+  with_items:
+  - net.ipv4.conf.all.arp_ignore
+  - net.ipv4.conf.default.arp_ignore
+
+- name: 'kernel : Only respond to ARP messages on the appropriate interface'
+  sysctl:
+    name: "{{ item }}"
+    value: '2'
+  with_items:
+  - net.ipv4.conf.all.arp_announce
+  - net.ipv4.conf.default.arp_announce
+
+- name: 'kernel : Disable IPv6 autoconfiguration'
+  sysctl:
+    name: "{{ item }}"
+    value: '0'
+  with_items:
+  - net.ipv6.conf.all.autoconf
+  - net.ipv6.conf.default.autoconf
+
+- name: 'kernel : Disable IPv6 neighbour solicitations'
+  sysctl:
+    name: "{{ item }}"
+    value: '0'
+  with_items:
+  - net.ipv6.conf.all.dad_transmits
+  - net.ipv6.conf.default.dad_transmits
+
+- name: 'kerenl : Assign one global unicast IPv6 address'
+  sysctl:
+    name: "{{ item }}"
+    value: '1'
+  with_items:
+    - net.ipv6.conf.all.max_addresses
+    - net.ipv6.conf.default.max_addresses
+
+- name: 'kernel : Do not send ICMP redirects'
+  sysctl:
+    name: "{{ item }}"
+    value: '0'
+  with_items:
+  - net.ipv4.conf.all.send_redirects
+  - net.ipv4.conf.default.send_redirects
+
+- name: 'kernel : Refuse IPv6 router advertisements'
+  sysctl:
+    name: "{{ item }}"
+    value: '0'
+  with_items:
+  - net.ipv6.conf.all.accept_ra
+  - net.ipv6.conf.all.accept_ra_defrtr
+  - net.ipv6.conf.all.accept_ra_pinfo
+  - net.ipv6.conf.all.accept_ra_rtr_pref
+  - net.ipv6.conf.all.router_solicitations
+  - net.ipv6.conf.default.accept_ra
+  - net.ipv6.conf.default.accept_ra_defrtr
+  - net.ipv6.conf.default.accept_ra_pinfo
+  - net.ipv6.conf.default.accept_ra_rtr_pref
+  - net.ipv6.conf.default.router_solicitations
+
+- name: 'kernel : Refuse secure ICMP redirects'
+  sysctl:
+    name: "{{ item }}"
+    value: '0'
+  with_items:
+  - net.ipv4.conf.all.secure_redirects
+  - net.ipv4.conf.default.secure_redirects
+
+- name: 'kernel : Do not accept IP source routing'
+  sysctl:
+    name: "{{ item }}"
+    value: '0'
+  with_items:
+  - net.ipv4.conf.all.accept_source_route
+  - net.ipv4.conf.default.accept_source_route
+  - net.ipv6.conf.all.accept_source_route
+  - net.ipv6.conf.default.accept_source_route
+
+- name: 'kernel : Do not accept ICMP redirects'
+  sysctl:
+    name: "{{ item }}"
+    value: '0'
+  with_items:
+  - net.ipv4.conf.all.accept_redirects
+  - net.ipv4.conf.default.accept_redirects
+  - net.ipv6.conf.all.accept_redirects
+  - net.ipv6.conf.default.accept_redirects

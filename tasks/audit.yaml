@@ -1,0 +1,13 @@
+---
+
+- name: 'audit : Ensure audit logs are written in raw format'
+  lineinfile:
+    path: "{{ audit_config }}"
+    regexp: '^log_format'
+    line: 'log_format = raw'
+
+- name: 'audit : Ensure audit logs are not automatically deleted'
+  lineinfile:
+    path: "{{ audit_config }}"
+    regexp: '^max_log_file_action'
+    line: 'max_log_file_action = keep_logs'

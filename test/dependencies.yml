@@ -1,0 +1,5 @@
+---
+  
+- src: git+https://github.com/selfhosting-lab/ansible-host
+  version: master
+  name: host

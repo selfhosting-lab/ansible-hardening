@@ -1,0 +1,25 @@
+---
+
+- name: 'ssh : Ensure SSHD configuration is set appropriately'
+  template:
+    src: sshd_config.j2
+    dest: "{{ sshd_config }}"
+    mode: 0600
+    owner: root
+    group: root
+    seuser: system_u
+    serole: object_r
+    setype: etc_t
+    validate: '/usr/sbin/sshd -T -C user=root -C host=localhost -C addr=localhost -f %s'
+  notify: restart sshd
+
+- name: 'ssh : Ensure SSH client configuration is set appropriately'
+  template:
+    src: ssh_config.j2
+    dest: "{{ ssh_config }}"
+    mode: 0644
+    owner: root
+    group: root
+    seuser: system_u
+    serole: object_r
+    setype: etc_t

@@ -1,0 +1,17 @@
+{{ ansible_managed | comment }}
+
+[DEFAULT]
+# Amount of time to ban by default
+bantime = {{ fail2ban_ban_time }}
+
+{% if fail2ban_allow_rfc1918 -%}
+# Whitelist RFC1918 addresses
+ignoreip = 127.0.0.0/8 {{ rfc1918_addresses | join(' ') }}
+{% endif %}
+
+[sshd]
+enabled = true
+
+# Ban addresses based on maxretry in findtime
+maxretry = 3
+findtime = 600

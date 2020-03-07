@@ -1,0 +1,11 @@
+---
+
+- name: 'selinux : Ensure SELinux python library is installed'
+  dnf:
+    name: python3-libselinux
+    state: present
+
+- name: 'selinux : Ensure SELinux is enforcing'
+  selinux:
+    policy: targeted
+    state: enforcing

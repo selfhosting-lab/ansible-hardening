@@ -1,0 +1,22 @@
+---
+
+name: hardening
+title: Tests for 'hardening' Ansible role
+maintainer: Ben Fairless
+copyright: Ben Fairless
+copyright_email: ben.fairless@gmail.com
+license: MIT
+summary: Validates security hardening configuration
+description: Verifies the configuration defined in role/hardening
+version: 1.0
+
+supports:
+- platform-family: fedora
+
+depends:
+- name: dev-sec-linux
+  git: https://github.com/dev-sec/linux-baseline.git
+  version: 2.3.0
+- name: dev-sec-ssh
+  git: https://github.com/dev-sec/ssh-baseline.git
+  version: 2.4.1

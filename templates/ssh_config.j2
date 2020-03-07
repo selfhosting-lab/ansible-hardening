@@ -1,0 +1,27 @@
+{{ ansible_managed | comment }}
+
+Host *
+  ForwardAgent no
+  ForwardX11 no
+  PasswordAuthentication no
+  HostbasedAuthentication no
+  GSSAPIAuthentication no
+  GSSAPIDelegateCredentials no
+  GSSAPIKeyExchange no
+  GSSAPITrustDNS no
+  BatchMode no
+  CheckHostIP yes
+  ConnectTimeout 0
+  StrictHostKeyChecking ask
+  Port 22
+  AddressFamily any
+  Protocol 2
+  Tunnel no
+  PermitLocalCommand no
+  {{ "Ciphers " + ssh_ciphers | join(',') }}
+  {{ "MACs " + ssh_macs | join(',') }}
+  {{ "KexAlgorithms " + ssh_kex | join(',') }}
+
+# To modify the system-wide ssh configuration, create a  *.conf  file under
+#  /etc/ssh/ssh_config.d/  which will be automatically included below
+Include /etc/ssh/ssh_config.d/*.conf

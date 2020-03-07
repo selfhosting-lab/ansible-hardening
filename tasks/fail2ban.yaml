@@ -1,0 +1,27 @@
+---
+
+- name: 'fail2ban : Ensure Fail2Ban is installed'
+  dnf:
+    name:
+    - fail2ban
+    - fail2ban-systemd
+    - fail2ban-firewalld
+    state: present
+
+- name: 'fail2ban : Configure default jails'
+  template:
+    src: fail2ban.j2
+    dest: "{{ fail2ban_config }}"
+    mode: 0644
+    owner: root
+    group: root
+    seuser: system_u
+    serole: object_r
+    setype: etc_t
+  notify: restart fail2ban
+
+- name: 'fail2ban : Ensure Fail2Ban is running'
+  systemd:
+    name: fail2ban
+    enabled: true
+    state: started

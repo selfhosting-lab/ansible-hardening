@@ -1,0 +1,116 @@
+{{ ansible_managed | comment }}
+
+################################################################################
+################################### NETWORK ####################################
+################################################################################
+
+# Listener
+Port 22
+ListenAddress 0.0.0.0
+AddressFamily inet
+
+# KeepAlive
+TCPKeepAlive no
+ClientAliveInterval 300
+ClientAliveCountMax 3
+MaxStartups 10:30:100
+
+# Tunnels
+PermitTunnel no
+AllowTcpForwarding no
+GatewayPorts no
+
+# Compression
+Compression no
+
+################################################################################
+################################### SECURITY ###################################
+################################################################################
+
+Protocol 2
+StrictModes yes
+SyslogFacility AUTH
+LogLevel VERBOSE
+
+# Ciphers
+{{ "Ciphers " + ssh_ciphers | join(',') }}
+{{ "MACs " + ssh_macs | join(',') }}
+{{ "KexAlgorithms " + ssh_kex | join(',') }}
+
+# Server host keys
+{% for key in ssh_host_keys -%}
+HostKey {{key}}
+{% endfor %}
+
+################################################################################
+################################ AUTHENTICATION ################################
+################################################################################
+
+# Kerberos
+KerberosAuthentication no
+KerberosOrLocalPasswd no
+KerberosTicketCleanup yes
+KerberosGetAFSToken no
+KerberosUseKuserok yes
+
+# GSSAPI
+GSSAPIAuthentication no
+GSSAPICleanupCredentials yes
+GSSAPIStrictAcceptorCheck yes
+GSSAPIKeyExchange no
+GSSAPIEnablek5users no
+
+# Host-based
+IgnoreRhosts yes
+IgnoreUserKnownHosts yes
+HostbasedAuthentication no
+
+# Password-based
+PasswordAuthentication no
+PermitEmptyPasswords no
+ChallengeResponseAuthentication no
+
+# Public key
+PubkeyAuthentication yes
+
+# Restrict attempts
+MaxAuthTries 2
+MaxSessions 10
+LoginGraceTime 30s
+
+# Restrict root login
+PermitRootLogin {{ ssh_permit_root_login }}
+
+# Use PAM authentication
+UsePAM yes
+
+################################################################################
+################################ MISCELLANEOUS #################################
+################################################################################
+
+# Display options
+Banner none
+PrintMotd no
+PrintLastLog yes
+
+# Disable agents
+AllowAgentForwarding no
+
+# Prevent reverse DNS lookups
+UseDNS no
+
+# Disable X11 forwarding
+X11UseLocalhost yes
+X11Forwarding no
+
+# Disable user environment variables being passed
+PermitUserEnvironment no
+
+# Accept locale-related environment variables
+AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
+AcceptEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
+AcceptEnv LC_IDENTIFICATION LC_ALL LANGUAGE
+AcceptEnv XMODIFIERS
+
+# Override default of no subsystems
+Subsystem sftp /usr/libexec/openssh/sftp-server
