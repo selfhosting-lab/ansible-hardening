@@ -1,0 +1,20 @@
+galaxy_info:
+  role_name: hardening
+  author: Ben Fairless <ben.fairless@gmail.com>
+  description: Provide a well-configured Fedora system, suitable for production usage.
+  company: selfhosting-lab.com
+  issue_tracker_url: https://github.com/selfhosting-lab/ansible-hardening/issues
+  license: MIT
+  min_ansible_version: 2.0
+
+  platforms:
+  - name: Fedora
+    versions:
+    - 30
+
+  galaxy_tags:
+  - fedora
+  - selfhosting-lab
+
+dependencies: []
+
