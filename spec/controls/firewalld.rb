@@ -1,5 +1,5 @@
 # Task file for tests
-ref_file = 'roles/hardening/tasks/firewalld.yaml'
+ref_file = 'tasks/firewalld.yml'
 
 control 'firewalld-01' do
   title 'Ensure FirewallD is installed'

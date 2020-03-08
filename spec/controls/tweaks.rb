@@ -1,5 +1,5 @@
 # Task file for tests
-ref_file = 'roles/hardening/tasks/tweaks.yaml'
+ref_file = 'tasks/tweaks.yml'
 
 control 'tweaks-01' do
   title 'Ensure SHA512 is used to hash passwords'

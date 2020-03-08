@@ -1,5 +1,5 @@
 # Task file for tests
-ref_file = 'roles/hardening/tasks/umasks.yaml'
+ref_file = 'tasks/umasks.yml'
 
 control 'umasks-01' do
   title 'Ensure insecure umasks are not used in profiles'

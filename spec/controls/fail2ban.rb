@@ -1,5 +1,5 @@
 # Task file for tests
-ref_file = 'roles/hardening/tasks/fail2ban.yaml'
+ref_file = 'tasks/fail2ban.yml'
 
 control 'fail2ban-01' do
   title 'Ensure Fail2Ban is installed'

@@ -1,5 +1,5 @@
 # Task file for tests
-ref_file = 'roles/hardening/tasks/kernel.yaml'
+ref_file = 'tasks/kernel.yml'
 
 control 'kernel-01' do
   title 'Prevent unprivileged users from seeing dmesg output'

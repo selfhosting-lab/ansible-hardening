@@ -1,5 +1,5 @@
 # Task file for tests
-ref_file = 'roles/hardening/tasks/selinux.yaml'
+ref_file = 'tasks/selinux.yml'
 
 control 'selinux-01' do
   title 'Ensure SELinux python library is installed'

@@ -1,5 +1,5 @@
 # Task file for tests
-ref_file = 'roles/hardening/tasks/ssh.yaml'
+ref_file = 'tasks/ssh.yml'
 
 ssh_ciphers = [
   'chacha20-poly1305@openssh.com',

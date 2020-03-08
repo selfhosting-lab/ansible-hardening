@@ -1,5 +1,5 @@
 # Task file for tests
-ref_file = 'roles/hardening/tasks/audit.yaml'
+ref_file = 'tasks/audit.yml'
 
 control 'audit-01' do
   title 'Ensure audit logs are written in raw format'
