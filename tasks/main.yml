@@ -1,0 +1,28 @@
+---
+
+- name: selinux
+  include: selinux.yml
+
+- name: umasks
+  include: umasks.yml
+
+- name: ssh
+  include: ssh.yml
+
+- name: kernel
+  include: kernel.yml
+
+- name: firewalld
+  include: firewalld.yml
+
+- name: fail2ban
+  include: fail2ban.yml
+
+- name: audit
+  include: audit.yml
+
+- name: tweaks
+  include: tweaks.yml
+
+- name: handlers
+  meta: flush_handlers
